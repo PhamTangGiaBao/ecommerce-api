@@ -1,0 +1,19 @@
+# Keep environment variables out of version control
+
+node_modules/
+.env
+.env.*
+!.env.example
+
+.DS_Store
+npm-debug.log*
+
+/src/generated/prisma
+
+.agents/
+.claude/
+.cursor/
+.devin/
+
+prisma.config.ts.bak
+prisma.config.ts.old.bak
