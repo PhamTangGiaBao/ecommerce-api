@@ -4,10 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --runInBand",
+    "test:watch": "jest --watch",
     "start": "node src/server.js",
     "dev": "node --watch src/server.js",
     "postinstall": "prisma skills sync || exit 0"
+  },
+  "overrides": {
+    "deepmerge-ts": "^8.0.2"
   },
   "keywords": [],
   "author": "",
@@ -19,6 +23,8 @@
     "express": "^5.2.1"
   },
   "devDependencies": {
-    "prisma": "^6.19.3"
+    "jest": "^30.5.2",
+    "prisma": "^6.19.3",
+    "supertest": "^7.3.0"
   }
 }
