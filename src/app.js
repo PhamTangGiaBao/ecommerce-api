@@ -2,6 +2,8 @@
 const express = require('express');
 const prisma = require('./lib/prisma');
 const productRoutes = require('./routes/productRoutes');
+const authRoutes = require('./routes/authRoutes');
+const orderRoutes = require('./routes/orderRoutes');
 
 const app = express();
 
@@ -28,5 +30,7 @@ app.get('/health', async (req, res) => {
 });
 
 app.use('/products', productRoutes);
+app.use('/auth', authRoutes);
+app.use('/orders', orderRoutes);
 
 module.exports = app;
