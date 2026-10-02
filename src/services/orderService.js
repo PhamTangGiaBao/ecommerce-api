@@ -140,7 +140,26 @@ async function createOrder(uid, items) {
   });
 }
 
+
+async function getOrderById(orderId, uid) {
+  return prisma.order.findFirst({
+    where: {
+      oid: orderId,
+      uid: uid
+    },
+    include: {
+      details: {
+        include: {
+          product: true
+        }
+      },
+      shipments: true
+    }
+  });
+}
+
 module.exports = {
   createOrder,
-  OrderError
+  OrderError,
+  getOrderById
 };
