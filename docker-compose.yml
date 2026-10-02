@@ -18,5 +18,18 @@ services:
       timeout: 5s
       retries: 5
 
+  api:
+    build: .
+    container_name: ecommerce-api
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
+    environment:
+      PORT: 3001
+      DATABASE_URL: postgresql://ecommerce_user:ecommerce_password@postgres:5432/ecommerce_db?schema=public
+    depends_on:
+      postgres:
+        condition: service_healthy
+
 volumes:
   postgres_data:

@@ -1,0 +1,52 @@
+
+name: CI - Ecommerce API
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: ecommerce_user
+          POSTGRES_PASSWORD: ecommerce_password
+          POSTGRES_DB: ecommerce_db
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U ecommerce_user -d ecommerce_db"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    env:
+      DATABASE_URL: postgresql://ecommerce_user:ecommerce_password@localhost:5432/ecommerce_db?schema=public
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --include=optional
+
+      - name: Generate Prisma Client
+        run: npx prisma generate
+
+      - name: Prepare database schema
+        run: npx prisma db push
+
+      - name: Run tests
+        run: npm test
