@@ -17,3 +17,6 @@ npm-debug.log*
 
 prisma.config.ts.bak
 prisma.config.ts.old.bak
+
+.postman/
+postman/
